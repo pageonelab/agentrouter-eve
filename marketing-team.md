@@ -21,7 +21,7 @@ Use `eve build --skip-sandbox-prewarm` for a local build without Vercel project 
 
 > Send this to the SEO specialist. Compare Vercel (vercel.com) and Netlify (netlify.com) for “frontend hosting” on US desktop in English. Include Reddit posts from the last seven days. Show the maximum cost of the three calls and wait for my approval. My total budget is $0.10.
 
-The budget is an example, not a quote. The first request buys one search snapshot for both domains. Each brand gets one page of Reddit results. A second week can use the saved first brief to calculate changes.
+The budget is an example. The first request buys one search snapshot for both domains. Each brand gets one page of Reddit results. A second week can use the saved first brief to calculate changes. For a worked example of the Google step with a recorded charge, see [how to compare search rankings and keyword volume](https://www.agentrouter.to/tutorial/check-search-rankings-and-volume?utm_source=eve&utm_medium=integration).
 
 ## Example output shape
 

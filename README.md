@@ -2,6 +2,8 @@
 
 Use one AgentRouter sign-in per person in a multi-user Eve app. The connection exposes `find_tools`, `describe_tool`, `invoke_tool` and `get_run`. Each paid invocation requires a USD ceiling and Eve approval. The AgentRouter API enforces the ceiling.
 
+Browse the [AgentRouter tool catalog](https://www.agentrouter.to/tools?utm_source=eve&utm_medium=integration) to choose a provider and see what a call costs before connecting your Eve app.
+
 ## Install
 
 1. Use Node 24 and an Eve project. From this integration's root, run `export eve_integration_dir="$PWD"`. In the same shell, switch to your Eve project and run the commands below. If the connection file already exists, compare it with the packaged version first.
@@ -12,14 +14,20 @@ Use one AgentRouter sign-in per person in a multi-user Eve app. The connection e
    cp -i "$eve_integration_dir/agentrouter.ts" agent/connections/agentrouter.ts
    ```
 
-2. In the linked Vercel project, create a custom connector for AgentRouter's MCP URL. Select user OAuth if asked. Attach its ID to the project and environment where you will run Eve.
+2. In the linked Vercel project, create a custom connector for AgentRouter's MCP URL. Select user OAuth if asked.
 
    ```sh
    vercel connect create https://mcp.agentrouter.to/ --name agentrouter
-   vercel connect attach <connector-id> -e development
    ```
 
-3. Set `AGENTROUTER_CONNECTOR_ID` to the returned connector ID in your shell for local build and dev. Use the same variable in Vercel's corresponding build and runtime environment. The ID identifies the connector. Vercel Connect handles each user's access token. For local authenticated use, link the project and pull its development environment with the Vercel CLI.
+3. Paste the returned connector ID at the prompt below to attach it to development and make it available to local builds. Set the same variable in the Vercel build and runtime environments where you deploy. For authenticated local use, pull the linked project's development environment with the Vercel CLI. Vercel Connect handles each user's access token.
+
+   ```sh
+   printf 'Vercel connector ID: '
+   read -r AGENTROUTER_CONNECTOR_ID
+   export AGENTROUTER_CONNECTOR_ID
+   vercel connect attach "$AGENTROUTER_CONNECTOR_ID" -e development
+   ```
 4. Run `eve build`, then `eve dev`. In an authenticated Eve conversation ask “Use AgentRouter to describe dataforseo.serp_google_organic. Show the inputs and current price. Stop before invoking.” Complete the browser sign-in as the caller and check that Eve returns the provider's terms.
 5. To try a paid run, ask for a single US English desktop search for “frontend hosting,” with an explicit per-call ceiling you accept. Review the tool ID, inputs and USD cap in the approval request. The returned receipt identifies the run and charge. Use `get_run` for a pending result.
 

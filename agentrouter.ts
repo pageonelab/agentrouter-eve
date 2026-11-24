@@ -11,15 +11,9 @@ if (!connectorId) {
 const readTools = ["find_tools", "describe_tool", "get_run"];
 
 export default defineMcpClientConnection({
-  approval: ({ toolName, toolInput }) => {
+  approval: ({ toolName }) => {
     if (readTools.includes(toolName.split("__").pop() ?? toolName)) {
       return "not-applicable";
-    }
-    if (!toolInput?.max_cost_usd) {
-      return {
-        reason: "Quote a USD ceiling and pass max_cost_usd.",
-        type: "denied",
-      };
     }
     return "user-approval";
   },

@@ -1,6 +1,6 @@
 # Connect Eve to AgentRouter
 
-Use one AgentRouter sign-in per person in a multi-user Eve app. The connection exposes `find_tools`, `describe_tool`, `invoke_tool` and `get_run`. Each paid invocation requires a USD ceiling and Eve approval. The AgentRouter API enforces the ceiling.
+Use one AgentRouter sign-in per person in a multi-user Eve app. The connection exposes `find_tools`, `describe_tool`, `invoke_tool` and `get_run`. Each paid invocation requires Eve approval. AgentRouter bills actual usage and honors any explicit USD ceiling.
 
 Browse the [AgentRouter tool catalog](https://www.agentrouter.to/tools?utm_source=eve&utm_medium=integration) to choose a provider and see what a call costs before connecting your Eve app.
 
@@ -29,7 +29,7 @@ Browse the [AgentRouter tool catalog](https://www.agentrouter.to/tools?utm_sourc
    vercel connect attach "$AGENTROUTER_CONNECTOR_ID" -e development
    ```
 4. Run `eve build`, then `eve dev`. In an authenticated Eve conversation ask “Use AgentRouter to describe dataforseo.serp_google_organic. Show the inputs and current price. Stop before invoking.” Complete the browser sign-in as the caller and check that Eve returns the provider's terms.
-5. To try a paid run, ask for a single US English desktop search for “frontend hosting,” with an explicit per-call ceiling you accept. Review the tool ID, inputs and USD cap in the approval request. The returned receipt identifies the run and charge. Use `get_run` for a pending result.
+5. To try a paid run, ask for a single US English desktop search for “frontend hosting,” with an optional per-call ceiling. Review the tool ID, inputs and USD cap in the approval request. The returned receipt identifies the run and charge. Use `get_run` for a pending result.
 
 When using the [Marketing Team recipe](marketing-team.md), install the connection on the SEO specialist. For a local policy regression check, copy `approval.test.mjs` beside a copy of `agentrouter.ts` outside Eve's auto-discovered connection directory in a project with Eve and Vercel Connect installed. Run `AGENTROUTER_CONNECTOR_ID=local-test node --test approval.test.mjs`. This check uses no account.
 

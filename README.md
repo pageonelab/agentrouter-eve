@@ -4,14 +4,28 @@ Use one AgentRouter sign-in per person in a multi-user Eve app. The connection e
 
 Browse the [AgentRouter tool catalog](https://www.agentrouter.to/tools?utm_source=eve&utm_medium=integration) to choose a provider and see what a call costs before connecting your Eve app.
 
+## Bundled skills
+
+Ask in your own words or name a skill. The host uses its description to select the instructions.
+
+| Skill | Try asking |
+| --- | --- |
+| [competitor-brief](skills/competitor-brief/SKILL.md) | Which alternatives do buyers mention on Reddit, and what made them switch? |
+| [job-shortlist](skills/job-shortlist/SKILL.md) | Find three Toronto sales roles I can apply for today. Link the employer forms. |
+| [growth-teardown](skills/growth-teardown/SKILL.md) | How does this product turn free users into referrals? Show where that happens. |
+| [ugc-teardown](skills/ugc-teardown/SKILL.md) | Use my clip notes to write a 12-second Reel for this product, with two opening lines. |
+
+Install the connection and skills on the agent that will perform the research. For a specialist, copy only the relevant skill directories into that subagent’s `skills/` alongside its own `connections/`.
+
 ## Install
 
 1. Use Node 24 and an Eve project. From this integration's root, run `export eve_integration_dir="$PWD"`. In the same shell, switch to your Eve project and run the commands below. If the connection file already exists, compare it with the packaged version first.
 
    ```sh
    npm install @vercel/connect
-   mkdir -p agent/connections
+   mkdir -p agent/connections agent/skills
    cp -i "$eve_integration_dir/agentrouter.ts" agent/connections/agentrouter.ts
+   cp -Ri "$eve_integration_dir/skills/." agent/skills/
    ```
 
 2. In the linked Vercel project, create a custom connector for AgentRouter's MCP URL. Select user OAuth if asked.
@@ -29,7 +43,7 @@ Browse the [AgentRouter tool catalog](https://www.agentrouter.to/tools?utm_sourc
    vercel connect attach "$AGENTROUTER_CONNECTOR_ID" -e development
    ```
 4. Run `eve build`, then `eve dev`. In an authenticated Eve conversation ask “Use AgentRouter to describe dataforseo.serp_google_organic. Show the inputs and current price. Stop before invoking.” Complete the browser sign-in as the caller and check that Eve returns the provider's terms.
-5. To try a paid run, ask for a single US English desktop search for “frontend hosting,” with an optional per-call ceiling. Review the tool ID, inputs and USD cap in the approval request. The returned receipt identifies the run and charge. Use `get_run` for a pending result.
+5. To try a paid run, ask for a single US English desktop search for “frontend hosting,” with an optional per-call ceiling. Review the tool ID, inputs and any supplied ceiling in the approval request. The returned receipt identifies the run and charge. Use `get_run` for a pending result.
 
 When using the [Marketing Team recipe](marketing-team.md), install the connection on the SEO specialist. For a local policy regression check, copy `approval.test.mjs` beside a copy of `agentrouter.ts` outside Eve's auto-discovered connection directory in a project with Eve and Vercel Connect installed. Run `AGENTROUTER_CONNECTOR_ID=local-test node --test approval.test.mjs`. This check uses no account.
 
